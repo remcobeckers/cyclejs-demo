@@ -1,4 +1,5 @@
 "use strict";
+var xstream_1 = require('xstream');
 var dom_1 = require('@cycle/dom');
 function Page1(sources) {
     var dom = sources.dom;
@@ -13,7 +14,8 @@ function Page1(sources) {
                 dom_1.hr(),
                 dom_1.h1(name ? "Hello, " + name + "!" : 'Hello! Please enter your name...'),
             ]);
-        })
+        }),
+        router: xstream_1.Stream.empty()
     };
     return sinks;
 }

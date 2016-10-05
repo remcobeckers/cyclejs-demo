@@ -30,11 +30,11 @@
     "@cycle/xstream-run": "^3.1.0",
     "cyclic-router": "^3.0.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "history": "^3.0.0",
     "immutable": "^3.8.1",
     "material-design-lite": "^1.2.1",
     "switch-path": "^1.1.8",
-    "xstream": "^6.4.1",
-    "history": "^3.0.0"
+    "xstream": "^6.4.1"
   },
   "devDependencies": {
     "concurrently": "^2.2.0",

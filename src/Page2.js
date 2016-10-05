@@ -1,4 +1,5 @@
 "use strict";
+var xstream_1 = require('xstream');
 var dom_1 = require('@cycle/dom');
 function Page2(sources) {
     var props$ = sources.props$;
@@ -7,7 +8,8 @@ function Page2(sources) {
             return dom_1.div('#root', [
                 dom_1.h1("A pre-configured name: " + props.name),
             ]);
-        })
+        }),
+        router: xstream_1.Stream.empty()
     };
     return sinks;
 }

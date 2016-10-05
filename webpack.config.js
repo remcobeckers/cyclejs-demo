@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/app.ts',
   output: {
     path: 'dist',
-    filename: 'app.js'
+    filename: '/app.js'
   },
   // Turn on sourcemaps
   devtool: 'source-map',
@@ -14,7 +14,7 @@ module.exports = {
   },
   // Add minification
   plugins: [
-    new webpack.optimize.UglifyJsPlugin(),
+    // new webpack.optimize.UglifyJsPlugin(),
     new HtmlWebpackPlugin({
       title: 'Cycle demo',
       template: './src/index.ejs',

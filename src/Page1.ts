@@ -16,7 +16,8 @@ export function Page1(sources: ISources): ISinks {
           hr(),
           h1(name ? `Hello, ${name}!` : 'Hello! Please enter your name...'),
         ])
-      )
+      ),
+    router: Stream.empty()
   };
   return sinks;
 }

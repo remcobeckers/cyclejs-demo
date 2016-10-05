@@ -18,7 +18,8 @@ export function Page2(sources: Page2Sources): ISinks {
         div('#root', [
           h1(`A pre-configured name: ${props.name}`),
         ])
-      )
+      ),
+    router: Stream.empty()
   };
   return sinks;
 }
