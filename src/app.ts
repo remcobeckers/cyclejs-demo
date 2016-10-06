@@ -45,7 +45,6 @@ function mainView(title: string, drawerTitle: string, tabContent: VNode) {
 
 function main(sources: ISources): ISinks {
   const dom = sources.dom;
-
   const routes = {
     '/page2/:name' : name => sources => Page2({ props$: Stream.of( { name: name  }), dom: sources.dom, router: sources.router }),
     '/home': Page1,
@@ -64,7 +63,7 @@ function main(sources: ISources): ISinks {
 
   const navClick = Stream.merge(
     homeClick$.mapTo('/home'),
-    page2Click$.mapTo('/page2/demoName')
+    page2Click$.mapTo('/page2/This is page 2')
   );
 
   const tabView$ = page$.map(c => c.dom).flatten();

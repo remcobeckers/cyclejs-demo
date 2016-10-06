@@ -6,7 +6,7 @@ function Page2(sources) {
     var sinks = {
         dom: props$.map(function (props) {
             return dom_1.div('#root', [
-                dom_1.h1("A pre-configured name: " + props.name),
+                dom_1.h2("A pre-configured name: " + props.name),
             ]);
         }),
         router: xstream_1.Stream.empty()

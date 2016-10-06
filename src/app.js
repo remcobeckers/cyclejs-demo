@@ -42,7 +42,7 @@ function main(sources) {
     });
     var homeClick$ = dom.select('.home').events('click');
     var page2Click$ = dom.select('.page2').events('click');
-    var navClick = xstream_1.Stream.merge(homeClick$.mapTo('/home'), page2Click$.mapTo('/page2/demoName'));
+    var navClick = xstream_1.Stream.merge(homeClick$.mapTo('/home'), page2Click$.mapTo('/page2/This is page 2'));
     var tabView$ = page$.map(function (c) { return c.dom; }).flatten();
     var mainView$ = tabView$.map(function (page) {
         return mainView("Demo", "Demo drawer", page);
