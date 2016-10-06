@@ -2,13 +2,30 @@
 var xstream_1 = require('xstream');
 var dom_1 = require('@cycle/dom');
 var xstream_run_1 = require('@cycle/xstream-run');
-require('./style.css');
-require('../node_modules/material-design-lite/material.min.css');
 var Page1_1 = require('./Page1');
 var Page2_1 = require('./Page2');
 var cyclic_router_1 = require('cyclic-router');
 var history_1 = require('history');
 var switch_path_1 = require('switch-path');
+function mainView(title, drawerTitle, tabContent) {
+    return dom_1.div('.mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-tabs', [
+        dom_1.header('.mdl-layout__header', [
+            dom_1.div('.mdl-layout__header-row', [
+                dom_1.span('.mdl-layout-title', title)
+            ]),
+            dom_1.div('.mdl-layout__tab-bar mdl-js-ripple-effect', [
+                dom_1.a('.mdl-layout__tab.is-active.home', { props: { href: '#fixed-tab-1' } }, "Home"),
+                dom_1.a('.mdl-layout__tab.page2', { props: { href: '#fixed-tab-2' } }, "Page 2"),
+            ])
+        ]),
+        dom_1.div('.mdl-layout__drawer', [
+            dom_1.span('.mdl-layout-title', [drawerTitle])
+        ]),
+        dom_1.h('main.mdl-layout__content', [
+            dom_1.div('.page-content', [tabContent])
+        ])
+    ]);
+}
 function main(sources) {
     var dom = sources.dom;
     var routes = {
@@ -28,11 +45,7 @@ function main(sources) {
     var navClick = xstream_1.Stream.merge(homeClick$.mapTo('/home'), page2Click$.mapTo('/page2/demoName'));
     var tabView$ = page$.map(function (c) { return c.dom; }).flatten();
     var mainView$ = tabView$.map(function (page) {
-        return dom_1.div([
-            dom_1.a('.home', { props: { href: '#' } }, 'Home'),
-            dom_1.a('.page2', { props: { href: '#' } }, 'Page 2'),
-            page
-        ]);
+        return mainView("Demo", "Demo drawer", page);
     });
     return {
         dom: mainView$,

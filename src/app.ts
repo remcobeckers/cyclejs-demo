@@ -1,9 +1,9 @@
 import { Stream } from 'xstream';
-import { div, h, a, label, input, hr, h1, makeDOMDriver, VNode } from '@cycle/dom';
+import { div, header, h, section, a, span, label, input, hr, h1, makeDOMDriver, VNode } from '@cycle/dom';
 import { DOMSource } from '@cycle/dom/xstream-typings';
 import { run } from '@cycle/xstream-run';
-import './style.css';
-import '../node_modules/material-design-lite/material.min.css';
+// import './style.css';
+// import '../node_modules/material-design-lite/material.min.css';
 import { Page1 } from './Page1';
 import { Page2, Page2Sources, Page2Props} from './Page2';
 import {makeRouterDriver } from 'cyclic-router';
@@ -18,6 +18,29 @@ export interface ISources {
 export interface ISinks {
   dom: Stream<VNode>;
   router: Stream<string>;
+}
+
+function mainView(title: string, drawerTitle: string, tabContent: VNode) {
+    return div('.mdl-layout.mdl-js-layout.mdl-layout--fixed-header.mdl-layout--fixed-tabs', [
+      header('.mdl-layout__header', [
+        div('.mdl-layout__header-row', [
+          span('.mdl-layout-title', title)
+        ]),
+        div('.mdl-layout__tab-bar mdl-js-ripple-effect', [
+          a('.mdl-layout__tab.is-active.home', { props: {href: '#fixed-tab-1'}}, "Home"),
+          a('.mdl-layout__tab.page2', { props: {href: '#fixed-tab-2'}}, "Page 2"),
+        ])
+      ]),
+      div('.mdl-layout__drawer', [
+        span('.mdl-layout-title', [ drawerTitle ])
+      ]),
+      h('main.mdl-layout__content', [
+        // section('.mdl-layout__tab-panel.is-active', [
+          div('.page-content', [ tabContent ])
+        // ])
+      ])
+    ]
+  );
 }
 
 function main(sources: ISources): ISinks {
@@ -46,12 +69,7 @@ function main(sources: ISources): ISinks {
 
   const tabView$ = page$.map(c => c.dom).flatten();
   const mainView$ = tabView$.map(page =>
-    div([
-        a('.home', { props:{ href : '#' }}, 'Home' ),
-        a('.page2', { props: {href: '#' }}, 'Page 2' ),
-        page
-      ]
-    )
+    mainView("Demo", "Demo drawer", page)
   );
 
   return {
