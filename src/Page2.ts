@@ -1,25 +1,35 @@
 import { Stream } from 'xstream';
-import { div, label, input, hr, h2 } from '@cycle/dom';
-import { ISources, ISinks } from './app';
+import { div, a, label, input, hr, h2, VNode } from '@cycle/dom';
+import { DOMSource } from '@cycle/dom/xstream-typings';
 
 export interface Page2Props {
   name: string;
 }
 
-export interface Page2Sources extends ISources {
+export interface Page2Sources  {
+  dom: DOMSource;
   props$: Stream<Page2Props>;
 }
 
-export function Page2(sources: Page2Sources): ISinks {
+export interface Page2Sinks {
+  dom: Stream<VNode>;
+  router: Stream<string>;
+}
+
+export function Page2(sources: Page2Sources): Page2Sinks {
   const props$ = sources.props$;
 
-  const sinks: ISinks = {
-    dom: props$.map(props =>
-        div('#root', [
-          h2(`A pre-configured name: ${props.name}`),
-        ])
-      ),
-    router: Stream.empty()
+  const goToHome$ = sources.dom.select('.homeLink').events('click').mapTo('/home');
+  const view$ = props$
+    .map(props =>
+      div('#root', [
+        h2(`A pre-configured name: ${props.name}`),
+        a('.homeLink', { props: { href: '#'}}, [ 'Home' ])
+      ])
+    );
+
+  return {
+    dom: view$,
+    router: goToHome$
   };
-  return sinks;
 }
